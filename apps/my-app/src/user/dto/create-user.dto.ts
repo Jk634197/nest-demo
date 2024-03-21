@@ -1,16 +1,21 @@
-// create-user.dto.ts
+import { AddressDto } from '@app/common/dto/Address.dto';
+import { Type } from 'class-transformer';
+import { IsEmail, IsNotEmpty, ValidateNested } from 'class-validator';
+
 export class CreateUserDto {
+  @IsNotEmpty()
   firstName: string;
+
+  @IsNotEmpty()
   lastName: string;
+
+  @IsEmail()
   email: string;
+
+  @IsNotEmpty()
   password: string;
-  address: {
-    address1: string;
-    address2: {
-      city: string;
-      state: string;
-      country: string;
-      zip: string;
-    };
-  };
+
+  @ValidateNested()
+  @Type(() => AddressDto)
+  address: AddressDto;
 }
